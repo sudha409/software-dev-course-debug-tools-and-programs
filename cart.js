@@ -6,14 +6,17 @@ const cart = [
 
 function calculateTotal(cartItems) {
   let total = 0;
-  for (let i = 0; i <= cartItems.length; i++) { // Bug: <= should be <
-      total += cartItems[i].price; // Bug: cartItems[i] is undefined on the last iteration
+  for (let i = 0; i < cartItems.length; i++) { // Bug: <= should be <
+      total += cartItems[i].price;   // Bug: cartItems[i] is undefined on the last iteration  Sol: removed = as i started with zero 
   }
   return total;
 }
 
 function applyDiscount(total, discountRate) {
-  return total - total * discountRate; // Bug: Missing validation for discountRate
+  if(typeof discountRate === "number" && discountRate > 0 && discountRate <=1){
+       return total - total * discountRate;
+  }
+  return total; // Bug: Missing validation for discountRate  Sol : added discountRate number validation and range allowed
 }
 
 function generateReceipt(cartItems, total) {
@@ -21,7 +24,14 @@ function generateReceipt(cartItems, total) {
   cartItems.forEach(item => {
       receipt += `${item.name}: $${item.price}\n`;
   });
-  receipt += `Total: $${total.toFixed(2)}`; // Bug: total may not be a number
+
+  if(typeof total === "number"){
+      receipt += `Total: $${total.toFixed(2)}`;
+  }else {
+     receipt += `Total: ${total}`;
+  }
+
+   // Bug: total may not be a number  : Sol : Added check for number to add decimals
   return receipt;
 }
 
