@@ -16,7 +16,7 @@ function applyDiscount(total, discountRate) {
   if(typeof discountRate === "number" && discountRate > 0 && discountRate <=1){
        return total - total * discountRate;
   }
-  return total; // Bug: Missing validation for discountRate  Sol : added discountRate number validation and range allowed
+  return total; // Bug: Missing validation for discountRate  Sol : added discountRate number validation and range allowed (checked first console errors and located line number to track)
 }
 
 function generateReceipt(cartItems, total) {
